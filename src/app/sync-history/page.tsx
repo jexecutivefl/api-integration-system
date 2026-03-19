@@ -3,6 +3,8 @@ import { PageHeader } from '@/components/ui/page-header';
 import { Card, CardHeader } from '@/components/ui/card';
 import { StatusBadge } from '@/components/ui/badge';
 
+export const dynamic = 'force-dynamic';
+
 export default async function SyncHistoryPage() {
   const syncRuns = await prisma.syncRun.findMany({
     take: 50,

@@ -1,5 +1,7 @@
 import { prisma } from '@/lib/db';
 import { PageHeader } from '@/components/ui/page-header';
+
+export const dynamic = 'force-dynamic';
 import { Card, CardHeader } from '@/components/ui/card';
 import { StatusBadge } from '@/components/ui/badge';
 import Link from 'next/link';
