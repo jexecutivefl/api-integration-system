@@ -1,0 +1,118 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Integration {
+  id         String   @id @default(cuid())
+  name       String
+  type       String   // crm | payment | form | support
+  status     String   @default("inactive") // active | inactive | error | syncing
+  config     String   @default("{}") // JSON
+  lastSyncAt DateTime?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  syncRuns          SyncRun[]
+  normalizedRecords NormalizedRecord[]
+}
+
+model SyncRun {
+  id               String    @id @default(cuid())
+  integrationId    String
+  status           String    @default("running") // running | completed | failed | partial
+  recordsProcessed Int       @default(0)
+  recordsFailed    Int       @default(0)
+  errorMessage     String?
+  startedAt        DateTime  @default(now())
+  completedAt      DateTime?
+
+  integration       Integration        @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+  normalizedRecords NormalizedRecord[]
+  workflowExecutions WorkflowExecution[]
+
+  @@index([integrationId])
+  @@index([status])
+}
+
+model NormalizedRecord {
+  id            String   @id @default(cuid())
+  integrationId String
+  syncRunId     String
+  entityType    String   // contact | transaction | submission | ticket
+  externalId    String
+  data          String   // JSON
+  normalizedAt  DateTime @default(now())
+
+  integration Integration @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+  syncRun     SyncRun     @relation(fields: [syncRunId], references: [id], onDelete: Cascade)
+
+  @@index([integrationId])
+  @@index([syncRunId])
+  @@index([entityType])
+  @@index([externalId])
+}
+
+model WorkflowDefinition {
+  id            String   @id @default(cuid())
+  name          String
+  description   String   @default("")
+  triggerType   String   // sync_completed | sync_failed | new_record | error_threshold
+  triggerConfig String   @default("{}") // JSON
+  actions       String   @default("[]") // JSON array
+  enabled       Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  executions WorkflowExecution[]
+}
+
+model WorkflowExecution {
+  id          String    @id @default(cuid())
+  workflowId  String
+  syncRunId   String?
+  status      String    @default("running") // running | completed | failed
+  result      String    @default("{}") // JSON
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
+
+  workflow WorkflowDefinition @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  syncRun  SyncRun?           @relation(fields: [syncRunId], references: [id], onDelete: SetNull)
+
+  @@index([workflowId])
+  @@index([syncRunId])
+}
+
+model LogEntry {
+  id        String   @id @default(cuid())
+  level     String   // debug | info | warn | error
+  source    String   // connector | pipeline | workflow | system | retry
+  message   String
+  metadata  String?  // JSON
+  timestamp DateTime @default(now())
+
+  @@index([level])
+  @@index([source])
+  @@index([timestamp])
+}
+
+model RetryQueue {
+  id          String   @id @default(cuid())
+  entityType  String   // sync_run | workflow_execution
+  entityId    String
+  action      String
+  attempts    Int      @default(0)
+  maxAttempts Int      @default(3)
+  nextRetryAt DateTime
+  lastError   String?
+  status      String   @default("pending") // pending | processing | completed | failed
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([status])
+  @@index([nextRetryAt])
+}

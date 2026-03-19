@@ -1,0 +1,127 @@
+{
+  "success": true,
+  "data": [
+    {
+      "id": "ticket-4001",
+      "subject": "Unable to log in after password reset",
+      "description": "I reset my password using the forgot password flow but now I get a 401 error every time I try to log in. I have cleared cookies and tried incognito mode.",
+      "priority": "high",
+      "status": "in_progress",
+      "customerEmail": "support@acmecorp.com",
+      "assignee": "Dana Scully",
+      "channel": "email",
+      "tags": ["bug", "tier-1"],
+      "createdAt": "2026-03-17T08:30:00.000Z",
+      "updatedAt": "2026-03-18T10:15:00.000Z"
+    },
+    {
+      "id": "ticket-4002",
+      "subject": "Data export failing with timeout error",
+      "description": "When I try to export more than 10,000 records the job runs for about 5 minutes and then fails silently. No error message is shown in the UI.",
+      "priority": "medium",
+      "status": "open",
+      "customerEmail": "accounts@globex.io",
+      "assignee": "Agent Smith",
+      "channel": "chat",
+      "tags": ["bug", "tier-2"],
+      "createdAt": "2026-03-16T14:20:00.000Z",
+      "updatedAt": "2026-03-16T14:20:00.000Z"
+    },
+    {
+      "id": "ticket-4003",
+      "subject": "Billing discrepancy on latest invoice",
+      "description": "Our latest invoice shows a charge for 150 seats but we only have 120 active users. Please review and issue a credit if applicable.",
+      "priority": "high",
+      "status": "waiting_on_customer",
+      "customerEmail": "finance@initech.com",
+      "assignee": "Rosa Diaz",
+      "channel": "email",
+      "tags": ["billing", "tier-1"],
+      "createdAt": "2026-03-14T09:45:00.000Z",
+      "updatedAt": "2026-03-17T16:00:00.000Z"
+    },
+    {
+      "id": "ticket-4004",
+      "subject": "API rate limiting is too aggressive",
+      "description": "We are hitting 429 errors after only 50 requests per minute. Our contract states a limit of 200 req/min. Can you check our tier?",
+      "priority": "urgent",
+      "status": "in_progress",
+      "customerEmail": "it@umbrella.co",
+      "assignee": "Jim Hopper",
+      "channel": "phone",
+      "tags": ["performance", "tier-2"],
+      "createdAt": "2026-03-18T07:00:00.000Z",
+      "updatedAt": "2026-03-18T11:30:00.000Z"
+    },
+    {
+      "id": "ticket-4005",
+      "subject": "Integration with Slack stopped working",
+      "description": "The Slack integration was working fine until yesterday. Now no notifications are being sent. We have verified the webhook URL is correct.",
+      "priority": "medium",
+      "status": "open",
+      "customerEmail": "ops@starkindustries.com",
+      "assignee": "Unassigned",
+      "channel": "web_form",
+      "tags": ["bug", "tier-1"],
+      "createdAt": "2026-03-15T12:10:00.000Z",
+      "updatedAt": "2026-03-15T12:10:00.000Z"
+    },
+    {
+      "id": "ticket-4006",
+      "subject": "Need help configuring SSO with Okta",
+      "description": "We are trying to set up SAML SSO with Okta but keep getting a metadata parsing error. Attached our IdP metadata XML for reference.",
+      "priority": "medium",
+      "status": "waiting_on_customer",
+      "customerEmail": "tech@wayneent.com",
+      "assignee": "Dana Scully",
+      "channel": "email",
+      "tags": ["access", "tier-3"],
+      "createdAt": "2026-03-10T15:30:00.000Z",
+      "updatedAt": "2026-03-16T09:45:00.000Z"
+    },
+    {
+      "id": "ticket-4007",
+      "subject": "CSV import rejecting valid records",
+      "description": "Importing a CSV with 5,000 rows fails at row 2,341. The error says invalid date format but the dates are in ISO 8601.",
+      "priority": "low",
+      "status": "resolved",
+      "customerEmail": "systems@cyberdyne.net",
+      "assignee": "Agent Smith",
+      "channel": "chat",
+      "tags": ["bug", "tier-2"],
+      "createdAt": "2026-03-08T11:00:00.000Z",
+      "updatedAt": "2026-03-13T14:20:00.000Z"
+    },
+    {
+      "id": "ticket-4008",
+      "subject": "Performance degradation during peak hours",
+      "description": "Response times have jumped from ~200ms to ~2s between 9am and 11am EST every weekday for the past two weeks.",
+      "priority": "urgent",
+      "status": "in_progress",
+      "customerEmail": "devops@tyrell.com",
+      "assignee": "Jim Hopper",
+      "channel": "phone",
+      "tags": ["performance", "tier-1"],
+      "createdAt": "2026-03-12T09:00:00.000Z",
+      "updatedAt": "2026-03-18T08:00:00.000Z"
+    },
+    {
+      "id": "ticket-4009",
+      "subject": "Missing data in sync run report",
+      "description": "The sync completed successfully according to the status but the report shows 0 records processed. The source definitely has data.",
+      "priority": "high",
+      "status": "closed",
+      "customerEmail": "engineering@massivedynamic.io",
+      "assignee": "Rosa Diaz",
+      "channel": "web_form",
+      "tags": ["bug", "tier-3"],
+      "createdAt": "2026-03-05T16:40:00.000Z",
+      "updatedAt": "2026-03-11T12:00:00.000Z"
+    }
+  ],
+  "metadata": {
+    "fetchedAt": "2026-03-19T12:00:00.000Z",
+    "recordCount": 9,
+    "source": "support"
+  }
+}
