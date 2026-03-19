@@ -4,6 +4,8 @@ import { Card } from '@/components/ui/card';
 import { StatusBadge } from '@/components/ui/badge';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 const typeLabels: Record<string, string> = {
   crm: 'CRM',
   payment: 'Payment',

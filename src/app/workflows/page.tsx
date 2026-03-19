@@ -4,6 +4,8 @@ import { Card } from '@/components/ui/card';
 import { StatusBadge, Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 const triggerLabels: Record<string, string> = {
   sync_completed: 'On Sync Complete',
   sync_failed: 'On Sync Failed',
