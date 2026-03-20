@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "postinstall": "prisma generate",
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && prisma db push && next build",
     "start": "next start",
     "lint": "next lint",
     "db:migrate": "npx prisma migrate dev",
@@ -14,7 +15,7 @@
   },
   "dependencies": {
     "@libsql/client": "^0.17.0",
-    "@prisma/adapter-libsql": "^7.5.0",
+    "@prisma/adapter-libsql": "^6.19.0",
     "@prisma/client": "^6.19.2",
     "dotenv": "^17.3.1",
     "next": "14.2.35",
