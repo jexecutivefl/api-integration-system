@@ -1,25 +1,12 @@
 import { PrismaClient } from '@/generated/prisma/client';
-import { PrismaLibSql } from '@prisma/adapter-libsql';
+import { PrismaNeon } from '@prisma/adapter-neon';
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-function getLibSQLUrl(): string {
-  const url = process.env.DATABASE_URL!;
-  // Prisma CLI resolves file: paths relative to prisma/ dir,
-  // but libSQL resolves relative to CWD. Adjust for local dev.
-  if (url.startsWith('file:./')) {
-    return url.replace('file:./', 'file:./prisma/');
-  }
-  return url;
-}
-
 function createPrismaClient(): PrismaClient {
-  const adapter = new PrismaLibSql({
-    url: getLibSQLUrl(),
-    authToken: process.env.TURSO_AUTH_TOKEN,
-  });
+  const adapter = new PrismaNeon({ connectionString: process.env.DATABASE_URL });
   return new PrismaClient({ adapter });
 }
 

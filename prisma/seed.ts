@@ -1,18 +1,7 @@
 import { PrismaClient } from '../src/generated/prisma/client';
-import { PrismaLibSql } from '@prisma/adapter-libsql';
+import { PrismaNeon } from '@prisma/adapter-neon';
 
-function getLibSQLUrl(): string {
-  const url = process.env.DATABASE_URL!;
-  if (url.startsWith('file:./')) {
-    return url.replace('file:./', 'file:./prisma/');
-  }
-  return url;
-}
-
-const adapter = new PrismaLibSql({
-  url: getLibSQLUrl(),
-  authToken: process.env.TURSO_AUTH_TOKEN,
-});
+const adapter = new PrismaNeon({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
