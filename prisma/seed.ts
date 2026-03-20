@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-import { PrismaLibSQL } from '@prisma/adapter-libsql';
+import { PrismaClient } from '../src/generated/prisma/client';
+import { PrismaLibSql } from '@prisma/adapter-libsql';
 
 function getLibSQLUrl(): string {
   const url = process.env.DATABASE_URL!;
@@ -9,7 +9,7 @@ function getLibSQLUrl(): string {
   return url;
 }
 
-const adapter = new PrismaLibSQL({
+const adapter = new PrismaLibSql({
   url: getLibSQLUrl(),
   authToken: process.env.TURSO_AUTH_TOKEN,
 });
