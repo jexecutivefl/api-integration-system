@@ -39,5 +39,14 @@ export function StatusBadge({ status }: { status: string }) {
     failed: 'error',
   }[status] as BadgeProps['variant'] || 'default';
 
-  return <Badge variant={variant}>{status}</Badge>;
+  const isLive = ['running', 'syncing', 'processing', 'active'].includes(status);
+
+  return (
+    <Badge variant={variant}>
+      {isLive && (
+        <span className="relative inline-block w-1.5 h-1.5 rounded-full bg-current mr-1.5 animate-pulse-glow" />
+      )}
+      {status}
+    </Badge>
+  );
 }

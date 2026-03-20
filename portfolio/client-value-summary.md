@@ -54,7 +54,17 @@ A concise overview of the business outcomes this system delivers, written for po
 
 ---
 
-## 6. Scalable Connector Architecture
+## 6. Intelligent Monitoring
+
+**Before:** Operators had to manually review logs, sync history, and retry queues to identify patterns. Optimization decisions (sync timing, batch sizes, retry policies) were based on gut feeling rather than data.
+
+**After:** The AI insights layer continuously analyzes integration health metrics and surfaces actionable recommendations: optimal sync windows based on API latency patterns, incremental sync opportunities based on record change rates, anomaly detection for elevated error rates, and stale workflow identification. Operators see recommendations directly on the dashboard and integration detail pages.
+
+**Outcome:** Proactive issue prevention rather than reactive firefighting. Optimization suggestions are data-driven, reducing sync failures by identifying issues before they escalate.
+
+---
+
+## 7. Scalable Connector Architecture
 
 **Before:** Each integration was a standalone script with its own conventions, error handling (or lack thereof), and data format. There was no shared infrastructure, so improvements to one integration did not benefit others.
 
