@@ -5,6 +5,8 @@ import { PageHeader } from '@/components/ui/page-header';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { EmptyState } from '@/components/ui/empty-state';
+import { SkeletonTable } from '@/components/ui/skeleton';
 import type { LogEntry, ApiResponse } from '@/lib/types';
 
 const levels = ['all', 'debug', 'info', 'warn', 'error'] as const;
@@ -38,7 +40,7 @@ export default function LogsPage() {
   useEffect(() => { fetchLogs(); }, [fetchLogs]);
 
   return (
-    <div>
+    <div className="animate-fade-in">
       <PageHeader
         title="Logs"
         description="Structured log viewer with filtering"
@@ -82,13 +84,34 @@ export default function LogsPage() {
 
       <Card padding={false}>
         {loading ? (
-          <div className="p-12 text-center text-gray-500">Loading logs...</div>
+          <div className="p-4">
+            <SkeletonTable rows={8} columns={4} />
+          </div>
         ) : logs.length === 0 ? (
-          <div className="p-12 text-center text-gray-500">No logs found matching filters.</div>
+          <div className="p-6">
+            <EmptyState
+              title="No logs found"
+              description={level !== 'all' || source !== 'all' ? 'Try adjusting your filters.' : 'Logs will appear here as the system runs.'}
+              icon={
+                <svg className="w-12 h-12 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                </svg>
+              }
+            />
+          </div>
         ) : (
           <div className="divide-y divide-gray-100">
-            {logs.map((log) => (
-              <div key={log.id} className="px-6 py-3 hover:bg-gray-50 transition-colors">
+            {logs.map((log, i) => (
+              <div
+                key={log.id}
+                className={`px-6 py-3 hover:bg-gray-50 transition-colors border-l-2 ${
+                  log.level === 'error' ? 'border-l-red-400' :
+                  log.level === 'warn' ? 'border-l-yellow-400' :
+                  log.level === 'info' ? 'border-l-blue-400' :
+                  'border-l-gray-200'
+                } animate-slide-up opacity-0`}
+                style={{ animationDelay: `${Math.min(i * 30, 300)}ms` }}
+              >
                 <div className="flex items-start gap-4">
                   <span className="text-xs text-gray-400 font-mono whitespace-nowrap mt-0.5">
                     {new Date(log.timestamp).toLocaleString()}

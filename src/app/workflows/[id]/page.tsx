@@ -7,6 +7,8 @@ import { Card, CardHeader } from '@/components/ui/card';
 import { StatusBadge, Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/ui/data-table';
+import { SkeletonCard, SkeletonTable } from '@/components/ui/skeleton';
+import { useToast } from '@/components/ui/toast';
 import type { WorkflowDefinition, WorkflowExecution, ApiResponse } from '@/lib/types';
 
 const triggerLabels: Record<string, string> = {
@@ -18,9 +20,11 @@ const triggerLabels: Record<string, string> = {
 
 export default function WorkflowDetailPage() {
   const params = useParams();
+  const { toast } = useToast();
   const [workflow, setWorkflow] = useState<WorkflowDefinition | null>(null);
   const [executions, setExecutions] = useState<WorkflowExecution[]>([]);
   const [executing, setExecuting] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fetchData = useCallback(async () => {
     const [wfRes, execRes] = await Promise.all([
@@ -31,6 +35,7 @@ export default function WorkflowDetailPage() {
     const execData: ApiResponse<WorkflowExecution[]> = await execRes.json();
     if (wfData.data) setWorkflow(wfData.data);
     if (execData.data) setExecutions(execData.data);
+    setLoading(false);
   }, [params.id]);
 
   useEffect(() => {
@@ -40,22 +45,51 @@ export default function WorkflowDetailPage() {
   async function manualExecute() {
     setExecuting(true);
     try {
-      await fetch(`/api/workflows/${params.id}/execute`, { method: 'POST' });
+      const res = await fetch(`/api/workflows/${params.id}/execute`, { method: 'POST' });
+      const data = await res.json();
+      if (data.success) {
+        toast({ message: 'Workflow executed successfully', variant: 'success' });
+      } else {
+        toast({ message: data.error || 'Execution failed', variant: 'error' });
+      }
       await fetchData();
+    } catch {
+      toast({ message: 'Execution request failed', variant: 'error' });
     } finally {
       setExecuting(false);
     }
   }
 
+  if (loading) {
+    return (
+      <div className="animate-fade-in">
+        <div className="mb-8">
+          <div className="h-8 w-64 bg-gray-200 rounded animate-pulse mb-2" />
+          <div className="h-4 w-40 bg-gray-200 rounded animate-pulse" />
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <SkeletonCard />
+          <SkeletonCard />
+        </div>
+        <SkeletonTable rows={5} columns={4} />
+      </div>
+    );
+  }
+
   if (!workflow) {
-    return <div className="flex items-center justify-center h-64 text-gray-500">Loading...</div>;
+    return <div className="flex items-center justify-center h-64 text-gray-500">Workflow not found</div>;
   }
 
   const actions = (() => { try { return JSON.parse(workflow.actions); } catch { return []; } })();
   const triggerConfig = (() => { try { return JSON.parse(workflow.triggerConfig); } catch { return {}; } })();
 
   return (
-    <div>
+    <div className="animate-fade-in">
       <PageHeader
         title={workflow.name}
         description={workflow.description}
@@ -66,8 +100,8 @@ export default function WorkflowDetailPage() {
         }
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <Card>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 animate-stagger">
+        <Card className="animate-slide-up opacity-0">
           <p className="text-sm text-gray-500">Status</p>
           <div className="mt-2">
             <Badge variant={workflow.enabled ? 'success' : 'default'} size="md">
@@ -75,11 +109,11 @@ export default function WorkflowDetailPage() {
             </Badge>
           </div>
         </Card>
-        <Card>
+        <Card className="animate-slide-up opacity-0">
           <p className="text-sm text-gray-500">Trigger</p>
           <p className="mt-2 text-lg font-semibold">{triggerLabels[workflow.triggerType] || workflow.triggerType}</p>
         </Card>
-        <Card>
+        <Card className="animate-slide-up opacity-0">
           <p className="text-sm text-gray-500">Total Executions</p>
           <p className="mt-2 text-lg font-semibold">{executions.length}</p>
         </Card>

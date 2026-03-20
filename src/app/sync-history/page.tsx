@@ -2,6 +2,7 @@ import { prisma } from '@/lib/db';
 import { PageHeader } from '@/components/ui/page-header';
 import { Card, CardHeader } from '@/components/ui/card';
 import { StatusBadge } from '@/components/ui/badge';
+import { EmptyState } from '@/components/ui/empty-state';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,26 +24,26 @@ export default async function SyncHistoryPage() {
   };
 
   return (
-    <div>
+    <div className="animate-fade-in">
       <PageHeader
         title="Sync History"
         description="Timeline of all data synchronization runs"
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <Card>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8 animate-stagger">
+        <Card className="animate-slide-up opacity-0">
           <p className="text-sm text-gray-500">Total Runs</p>
           <p className="text-3xl font-bold text-gray-900 mt-2">{stats.total}</p>
         </Card>
-        <Card>
+        <Card className="animate-slide-up opacity-0">
           <p className="text-sm text-gray-500">Completed</p>
           <p className="text-3xl font-bold text-green-600 mt-2">{stats.completed}</p>
         </Card>
-        <Card>
+        <Card className="animate-slide-up opacity-0">
           <p className="text-sm text-gray-500">Failed</p>
           <p className="text-3xl font-bold text-red-600 mt-2">{stats.failed}</p>
         </Card>
-        <Card>
+        <Card className="animate-slide-up opacity-0">
           <p className="text-sm text-gray-500">Partial</p>
           <p className="text-3xl font-bold text-yellow-600 mt-2">{stats.partial}</p>
         </Card>
@@ -53,7 +54,12 @@ export default async function SyncHistoryPage() {
           <CardHeader title="Sync Run Timeline" />
         </div>
         {syncRuns.length === 0 ? (
-          <div className="p-12 text-center text-gray-500">No sync runs yet.</div>
+          <div className="p-6">
+            <EmptyState
+              title="No sync runs yet"
+              description="Trigger a sync from the Integrations page to see history here."
+            />
+          </div>
         ) : (
           <div className="divide-y divide-gray-100">
             {syncRuns.map((run) => {

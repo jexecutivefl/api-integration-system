@@ -50,13 +50,14 @@ export function Sidebar() {
 
       <div className="p-4 border-t border-gray-800">
         <div className="flex items-center gap-3 px-3">
-          <div className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
-            <span className="text-xs font-medium">OP</span>
+          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+            <span className="text-xs font-bold">OP</span>
           </div>
-          <div>
+          <div className="flex-1">
             <p className="text-sm font-medium">Operator</p>
             <p className="text-xs text-gray-400">Admin</p>
           </div>
+          <span className="text-[10px] px-1.5 py-0.5 rounded bg-gray-800 text-gray-400 font-mono">v2.0</span>
         </div>
       </div>
     </aside>

@@ -52,6 +52,12 @@ Every significant event across the system -- connector fetches, pipeline stages,
 ### Monitoring Dashboard
 A server-rendered Next.js dashboard provides real-time visibility into system health: active integrations, sync success rates, record counts, pending retries, recent sync runs, and recent activity logs. Detail pages for each integration and workflow show full history and configuration.
 
+### AI-Powered Insights
+An intelligent analysis layer surfaces actionable recommendations based on integration health metrics. The system identifies optimization opportunities (sync window scheduling, incremental sync candidates), flags anomalies (elevated error rates, stalled workflows), and provides confidence metrics for each suggestion. Anomaly detection banners alert operators to unusual patterns in real-time.
+
+### Interactive Management
+The platform includes a full management layer: add new integrations via a guided form, search and filter across all integrations and workflows, and trigger actions directly from the dashboard. Skeleton loading states, toast notifications, and micro-animations provide a polished, responsive user experience throughout.
+
 ---
 
 ## Role and Responsibilities
@@ -80,3 +86,5 @@ A server-rendered Next.js dashboard provides real-time visibility into system he
 | Retry          | Exponential backoff queue           |
 | Logging        | Structured, database-persisted logs |
 | Rendering      | Server-side (RSC)                   |
+| AI Layer       | Pattern analysis + recommendations  |
+| UX             | Skeleton loaders, toasts, animations|

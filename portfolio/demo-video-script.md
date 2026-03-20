@@ -24,10 +24,12 @@
 
 > "This is the API Integration System -- a full-stack platform I built to centralize and automate third-party data syncs."
 
-- Hover over the four stat cards: Active Integrations, Sync Success Rate, Records Synced, Pending Retries.
-- Briefly gesture at the Recent Sync Runs panel and the Recent Activity feed.
+- Point out the anomaly detection banner at the top if visible.
+- Hover over the four stat cards with trend indicators: Active Integrations, Sync Success Rate, Records Synced, Pending Retries.
+- Show the Sync Activity bar chart and the AI Insights panel with its animated recommendations.
+- Briefly gesture at the live activity feed with the green "Live" indicator.
 
-> "The dashboard gives the operations team an instant snapshot: how many integrations are healthy, the overall sync success rate, total records processed, and whether anything is queued for retry."
+> "The dashboard gives the operations team an instant snapshot with AI-powered insights: sync health, trend analysis, anomaly detection, and actionable recommendations -- all in real-time."
 
 ---
 
@@ -37,6 +39,8 @@
 
 > "The system manages four connector types -- CRM, Payment, Form, and Support -- each with its own status and sync history."
 
+- Show the search bar and type filter pills.
+- Click "Add Integration" to show the modal form, then close it.
 - Point out the four integration cards with their status badges (active, inactive, error).
 - Click into the CRM integration card.
 
@@ -48,14 +52,15 @@
 
 ### Scene 3: Trigger a Sync (0:30 - 0:45)
 
-**[Action: Click the "Trigger Sync" button on the CRM integration detail page]**
+**[Action: Click the "Sync Now" button on the CRM integration detail page]**
 
 > "I can trigger a sync on demand. The system fetches data from the external API, validates every record against the entity schema, normalizes it into a canonical format, and persists the results."
 
-- Wait for the sync to complete (1-2 seconds).
+- Wait for the sync to complete -- notice the toast notification appearing in the bottom-right corner.
+- Point out the AI-powered "Recommended Actions" section with smart suggestions.
 - Point out the new row in the sync history table with its status, record count, and timestamp.
 
-> "This run pulled 8 contacts, validated them, and stored them as normalized records -- all logged end-to-end."
+> "This run pulled 8 contacts, validated them, and stored them as normalized records. Notice the AI recommendations suggesting optimal sync timing and incremental sync opportunities."
 
 ---
 
@@ -104,7 +109,7 @@
 
 **[Navigate: Return to Dashboard]**
 
-> "The API Integration System: pluggable connectors, a validated normalization pipeline, event-driven workflows, automatic retries, and full observability -- all in a single dashboard."
+> "The API Integration System: pluggable connectors, a validated normalization pipeline, event-driven workflows, AI-powered insights, automatic retries, and full observability -- all in a polished, production-grade dashboard."
 
 ---
 
