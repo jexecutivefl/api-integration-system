@@ -1,6 +1,19 @@
 import { PrismaClient } from '@prisma/client';
+import { PrismaLibSQL } from '@prisma/adapter-libsql';
 
-const prisma = new PrismaClient();
+function getLibSQLUrl(): string {
+  const url = process.env.DATABASE_URL!;
+  if (url.startsWith('file:./')) {
+    return url.replace('file:./', 'file:./prisma/');
+  }
+  return url;
+}
+
+const adapter = new PrismaLibSQL({
+  url: getLibSQLUrl(),
+  authToken: process.env.TURSO_AUTH_TOKEN,
+});
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
   // Clean existing data
