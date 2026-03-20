@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
       where.source = source;
     }
     if (search) {
-      where.message = { contains: search };
+      where.message = { contains: search, mode: 'insensitive' };
     }
 
     const [logs, total] = await Promise.all([
